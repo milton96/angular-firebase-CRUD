@@ -32,6 +32,15 @@ export class ProductService {
     return this.products;
   }
 
+  addProduct(product: Product) {
+    this.productsCollection.add(product);
+  }
+
+  updateProduct(product: Product) {
+    this.productDoc = this.firestore.doc(this.collection + `/${product.id}`);
+    this.productDoc.update(product);
+  }
+
   deleteProduct(product: Product) {
     this.productDoc = this.firestore.doc(this.collection + `/${product.id}`);
     this.productDoc.delete();

@@ -1,12 +1,33 @@
 <div *ngIf="products.length > 0; else noproducts">
-    <ul>
-        <li class="text" *ngFor="let product of products">
-            {{product.name}} <br />
-            {{product.description}} <br />
-            {{product.price}} <br />
-            {{product.quantity}}
+    <ul class="list-group">
+        <li class="text list-group-item list-group-item-action" *ngFor="let product of products">
+            <h5>{{product.name}}</h5>
+            <h3><span class="text-info">Price: </span>${{product.price}}</h3>
+            <h4><span class="text-success">Quantity: </span>{{product.quantity}}</h4>
+            <p>{{product.description}}</p>
+            <button (click)="delete($event, product)" class="btn btn-danger mr-1">Delete</button>
+            <button (click)="setData(product)" class="btn btn-secondary">Edit</button>
 
-            <button (click)="delete($event, product)">Delete</button>
+            <div *ngIf="editing && editProduct.id == product.id" class="pt-2">
+                <form (ngSubmit)="update()">
+                    <div class="form-group">
+                        <input type="text" name="name" [(ngModel)]="editProduct.name" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="description" [(ngModel)]="editProduct.description" class="form-control"
+                            placeholder="Description">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="price" [(ngModel)]="editProduct.price" class="form-control" placeholder="Price">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="quantity" [(ngModel)]="editProduct.quantity" class="form-control"
+                            placeholder="Quantity">
+                    </div>
+
+                    <button type="submit" class="btn btn-info">Update</button>
+                </form>
+            </div>
         </li>
     </ul>
 </div>

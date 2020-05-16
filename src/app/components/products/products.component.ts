@@ -8,20 +8,33 @@ import { Product } from 'src/app/models/product';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  public products: Product[] = [];
+  private products: Product[] = [];
+  private editProduct: Product;
+  private editing: boolean = false;
 
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.productService.getProducts().subscribe(products => {
-      console.log(products);
       this.products = products;
     });
   }
 
+  setData(product: Product): void {
+    this.editing = !this.editing;
+    this.editProduct = product;
+  }
+
+  update(): void {
+    console.log(this.editProduct);
+    this.productService.updateProduct(this.editProduct);
+    this.editProduct = {} as Product;
+    this.editing = false;
+  }
+
   delete(event: any, product: Product): void {
-    console.log(product);
-    this.productService.deleteProduct(product);
+    if(confirm('Are you sure you want to delete it?'))
+      this.productService.deleteProduct(product);
   }
 
 }
