@@ -1,1 +1,16 @@
-<p>products works!</p>
+<div *ngIf="products.length > 0; else noproducts">
+    <ul>
+        <li class="text" *ngFor="let product of products">
+            {{product.name}} <br />
+            {{product.description}} <br />
+            {{product.price}} <br />
+            {{product.quantity}}
+
+            <button (click)="delete($event, product)">Delete</button>
+        </li>
+    </ul>
+</div>
+
+<ng-template #noproducts>
+    <p>No hay productos</p>
+</ng-template>
